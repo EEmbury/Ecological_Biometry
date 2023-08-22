@@ -37,3 +37,43 @@ length <- c(27, 30, 35, 31, 40)
 length
 
 length[1:2] #view subset of data
+
+length[c(1, 4)]
+
+length[c(1,3,5)] #view data at certain positions
+
+
+sex <- c("female", "male", "male", "female", "male")
+sex
+
+
+sex <- c(f, f, m) #error, not numeric
+sex <- c("f", "f", "m")
+sex[3]
+
+
+#logical values
+
+length <- c(27, 30, 35, 31, 40)
+
+length > 35 #true/false answers
+
+length[length > 35] #shows actual observation, [] allows for extraction
+
+length[length >= 31]
+
+length[length < 30 | length > 40] # OR "|"
+
+length[length > 30 & length < 35] # AND "&"
+
+length[length < 30 & length > 40]
+
+
+#reading data from Excel
+
+setwd("/Users/emilyembury/Desktop/Ecological_biometry")
+
+data1 <- read.csv("fish.csv", header = TRUE)
+
+
+
