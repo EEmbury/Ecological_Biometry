@@ -75,5 +75,33 @@ setwd("/Users/emilyembury/Desktop/Ecological_biometry")
 
 data1 <- read.csv("fish.csv", header = TRUE)
 
+str(data1) #check data frame
+
+head(data1, 3) #first 3 rows of data
+
+tail(data1, 5) #last 5 rows of data
+
+data1[1:3, 2] #rows 1-3 of 2nd column
+
+data1$weight #view specific column
+#or
+data1[,2]
 
 
+#reading txt file
+
+data2 <- read.table("fish.txt", header = TRUE)
+
+
+
+
+
+
+
+#package install for homework
+
+#install.packages("knitr")
+
+#install.packages("rmarkdown")
+
+#install.packages("tinytex")
