@@ -96,8 +96,6 @@ data2 <- read.table("fish.txt", header = TRUE)
 
 
 
-
-
 #package install for homework
 
 #install.packages("knitr")
