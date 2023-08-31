@@ -1,0 +1,47 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: Probability Distributions Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# **Random Variables**
+
+- a random variable is a variable that takes on different values, each with an associated probability
+    - **Discrete Random Variables**
+      - finite or countable values
+        - presence or absence of a species
+        - number of offspring produced
+        
+    - **Continuous Random Variables**
+      -any value with a defined interval
+        - biomass
+        - wing length
+        - pesticide concentration in fish tissues
