@@ -1,0 +1,60 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: Point and Interval Estimations Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# ** Point Estimation for the population mean **
+- 0.2527067 is the point estimate of the population mean spine length
+```{r}
+spider <- read.table("spider.txt", header = TRUE)
+mean(spider$length)
+```
+- how precise is this estimate?
+  - can be assessed through confidence interval or standard error
+```{r}
+#calculate lower tail probability distribution
+qt(p=0.95, df =24)
+
+qt(p = (1-(.15/2)), df = 15)
+
+# calculate for spider data
+
+n <- length(spider$length) #n=50, sample size
+xbar <- mean(spider$length) #xbar = 0.2527067
+s <- sd(spider$length) #standard_dev = 0.04169794
+se <- s/sqrt(n) #standard error = 0.005896979
+tcr <- qt(p = (1-(0.05/2)), df = 49) #2.009575
+lower <- xbar - tcr * se #lower limit of 95% confidence
+upper <- xbar + tcr * se #upper limit of 95% confidence
+c(lower, upper)
+```
+
