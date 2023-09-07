@@ -1,0 +1,156 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: Probability Distributions Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# **Random Variables**
+
+- a random variable is a variable that takes on different values, each with an associated probability
+    - **Discrete Random Variables**
+      - finite or countable values
+        - presence or absence of a species
+        - number of offspring produced
+        
+    - **Continuous Random Variables**
+      - any value with a defined interval
+        - biomass
+        - wing length
+        - pesticide concentration in fish tissues
+        
+# **Probability Distribution**
+
+- obtained by assigning a probability to every possible outcome in an experiment
+- **probabilities must be between 0 and 1**
+  - the sum of a probability table must add up to 1
+- two forms of probability distributions
+  - discrete
+    - Bernoulli, Binomial, Poisson, etc.
+  - continuous
+    - Uniform, Normal, Exponential
+    
+# **Bernoulli Distribution** (Discrete, two possible outcomes)
+- *used for random variable with two possible outcomes*
+- good for looking at **one** study site or individual (n = 1)
+- *Ex.* occurrence of a rare plant species at a site (Present or Not Present)
+- can calculate mean and variance of the probability distribution
+
+```{r}
+rbinom(5, 1, 0.5) #like of flipping a coin 5 times, probability of observing a head (1) is 0.5
+#rbinom calculates random values
+
+a <- rbinom(10000, 1, 0.5)
+table(a)
+
+# detect a rare plant, the literature suggests that the probability of finding the plant is 2%
+# find plant = 1
+# do not find plant = 0
+
+dbinom(x = 0, size = 1, prob = 0.02) # for Bernoulli, size = 1
+#dbinom calculates distribution
+
+# x = 0 because we want to calculate the probability of  not finding the plant or  X=0
+# size = # of sites visited to find the plant
+
+```
+# **Binomial Distribution** (Discrete)
+- good for looking across **multiple** study sites for species detection
+- parameter of interest is probability
+- if you visit a site 5 times or visit 5 different sites, X can equal 0, 1, 2, 3, 4, or 5
+- get a given probability for a single given site and apply to multiple sites
+- like completing the Bernoulli distribution process multiple times
+- x >= 1 is "at least" one
+- x <= 1 is "at most" one
+
+```{r}
+# example: 
+# number of detection of a rare plant in 25 site visits
+# n = 25
+# suppose the probability of detecting plant in one site is 0.02
+
+dbinom(x = 0, size = 25, prob = 0.02) #probability of not seeing the species at all P(X = 0) in 25 sites
+
+dbinom(x= 1, size = 25, prob = 0.02) #probability of seeing the species at 1 out of 25 sites
+
+### calculating with >= or =<
+
+#probability of x =< 1
+(dbinom(x = 1, size = 25, prob = 0.02) + dbinom(x = 0, size = 25, prob = 0.02))
+
+#probability of x >= 1
+  #P(x >= 1)
+  # all probability add up to 1
+  # 1 - P(x = 0)
+1 - dbinom(x = 0, size = 25, prob = 0.02)
+
+#pbinom vs. dbinom
+  #dbinom : calculate P(X=x)
+  #pbinom : calculate P(X =< x)
+pbinom(q = 1, size = 25, prob = 0.02) # x is less than or equal to 1
+dbinom(x = 1, size = 25, prob = 0.02) + dbinom(x = 0, size = 25, prob = 0.02) # x is less than or equal to 1
+```
+# **Poisson Distribution** (Discrete)
+- possible values of X is some value x, no upper boundary
+- parameter of interest is $\lambda$ where $\lambda$ is a the average # of occurrences of an event within a given time
+- mean and variance are the same with Poisson distribution
+
+```{r}
+rpois(n = 5, lambda = 2.5) #random generation for the Poisson distribution with parameter lambda
+
+# P(X>2) is very difficult because there is no upper boundary, 
+ # need to subtract X = 0,1,2 from 1
+
+1- ppois(q = 2, lambda = 0.75)
+
+dpois(x = 3, lambda = 0.75) # probability that X = 3
+
+ppois(q = 3, lambda = 0.75) # probability of x less than 3
+```
+# **Normal Distribution** (Continuous Probability Distribution)
+- standard normal distribution: mean = 0 and variance = 1
+- if you want to find the probability of X < 15, need to find the area under the curve < 15
+```{r}
+# ex. suppose the beetle size X is normally distributed with a mean 20mm and variance 10mm (st dev = 3.1623)
+# calculate P(X<15)
+pnorm(q = 15, mean = 20, sd = 3.1623)
+
+# calculate P(X > 23.5) 
+  # area under curve = 1 
+  # there is no way to calculate area "above" in r so you need to subtract from 1
+  # 1 - P(X<23.5)
+
+1 - pnorm(q = 23.5, mean = 20, sd = 3.1623)
+
+```
+
+# ** Central Limit Theorem **
+- a single population can be skewed but if you take multiple sets of samples, the distribution of those means will be a normal distribution
+- sufficiently large sample size, you get a normal distribution
