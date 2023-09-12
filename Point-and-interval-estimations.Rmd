@@ -56,5 +56,13 @@ tcr <- qt(p = (1-(0.05/2)), df = 49) #2.009575
 lower <- xbar - tcr * se #lower limit of 95% confidence
 upper <- xbar + tcr * se #upper limit of 95% confidence
 c(lower, upper)
+
 ```
 
+# *Assumptions for CI*
+
+  - observations are independent
+  - the undelying population distribution is normal
+  
+  - if data is non-normal, the data must be transformed in order to construct CI
+    - log, square root, inverse
