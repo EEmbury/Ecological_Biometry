@@ -1,0 +1,126 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: Hypothesis Testing Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# **Steps in hypothesis testing**
+  1. state the null and alternate hypothesis
+  2. specify level of significance
+  3. collect data under one or more random sampling techniques
+  4. choose an appropriate test statistic and its probability distribution
+  5. determin the p-value
+  6. make a decision to reject the null or fail to reject the null
+  
+  
+# **Errors in hypothesis testing**
+
+  - **type 1 error** -> if we reject the true null hypothesis
+    - related to $\alpha$
+  - **type 2 error** -> we fail to reject the null when it is false
+    - related to $\beta$ 
+    
+    
+# **One-sample t-test**
+  - useful to mak inference about a single population mean
+  - **Assumptions**
+    - the population must be normally distributed
+    - observations are independent
+    
+  - **Null hypothesis**
+    - the population mean = a hypothesized value
+    - always use = sign
+    
+  - **Alternative hypotheses**
+    - the population mean $\ne$ a hypothesized value (two sided/two-tailed)
+    - the population mean > a hypothesized value (one-sided/right-tailed)
+    - the population mean < a hypothesized value (one-sided/left-tailed)
+  
+  - **Calculate p-value**
+    - assume normal distribution, therefore p follows t-distribution table
+    
+  - **Example**
+    - null: population mean of spine length = 0.27
+    - alternative: population mean of spine length $\ne$ 0.27
+
+```{r}
+
+spider <- read.table("spider.txt", head = TRUE)
+
+#summary statistics
+summary(spider$length)
+#right skewed, mean is greater than the median
+
+#standard deviation
+sd(spider$length)
+
+#one-sample t-test
+t.test(x = spider$length, alternative = "two.sided", mu = 0.27, conf.level = 0.95)
+
+```
+  - based on the **p-value**: since it is less than $\alpha$ = 0.05, we reject the null and conclude that the true mean spine length is different from 0.27mm
+  - based on the **CI**: since the 95% CI does not include the true mean value (0.27mm), we reject the null
+  
+  
+# **Paired t-test**
+  - useful for when a measurement in one sample is matched to a sample in another sample (ex. before and after samples, recapturing birds)
+  - **Assumptions**
+    - the distribution of differences in paired data is normally distributed
+    - the pairs are independent
+  
+  - **Null Hypothesis**
+    - the population mean of the paired differences = 0
+
+  - **Alternative hypotheses**
+    - the population mean of the paired differences $\ne$ a hypothesized value (two sided/two-tailed)
+    - the population mean of the paired differences > a hypothesized value (one-sided/right-tailed)
+    - the population mean of the paired differences < a hypothesized value (one-sided/left-tailed)
+  
+  - **Example**
+    - null: population mean of the paired body weight differences = 0
+    - alternative: population mean of the paired body weight differences $\ne$ 0 
+    - weight of the same individuals was measured in 2015 and 2016
+
+```{r}
+btit <- read.csv("bluetit.csv", header = TRUE)
+head(btit, 3)
+diff <- btit$weight2016 - btit$weight2015
+summary(diff)
+sd(diff)
+meand <- mean(diff)
+boxplot(diff, main = "Boxplot of body weight differences")
+points(meand, col = "red", pch = 18)
+
+t.test(x = btit$weight2016, y = btit$weight2015, paired = TRUE, alternative = "two.sided", 
+       mu = 0, conf.level = 0.95, var.equal = TRUE)
+```
+  - based on the **p-value**: since it is more than $\alpha$ = 0.05, we fail to reject the null and conclude that there is no significant change in the mean weight of the blue tits
+  - based on the **CI**: since the 95% CI does include 0, we fail to reject the null
