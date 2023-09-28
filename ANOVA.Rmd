@@ -50,3 +50,8 @@ knitr::opts_chunk$set(
   - terminology:
       - treatments: the different levels of the categorical variable that are being compared
       - replicates: observations made within each treatment
+  - key assumptions:
+      - observations are independent
+      - normal distribution
+      - variance is homogeneous (if variance is unequal = hetroscedasticity)
+      - the residuals are normally distributed
