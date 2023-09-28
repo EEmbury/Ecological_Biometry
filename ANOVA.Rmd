@@ -1,0 +1,52 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: ANOVA Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# Analysis of variance (ANOVA)
+
+ - Allows us to compare more than two independent groups (a paired t-test can only be used for two groups)
+ - Essentially an extension of a two sample t-test
+ - Types of ANOVA:
+    - single-factor (one-way) ANOVA
+    - multi-factor ANOVA
+ - ANOVA design
+    - predictor (or independent) variable: categorical
+    - response (or dependent) variable: continuous
+    
+
+# One-way ANOVA
+  - one categorical variable with more than 2 levels and a continuous response variable
+  - each observation must be independent
+  - terminology:
+      - treatments: the different levels of the categorical variable that are being compared
+      - replicates: observations made within each treatment
