@@ -55,3 +55,36 @@ knitr::opts_chunk$set(
       - normal distribution
       - variance is homogeneous (if variance is unequal = hetroscedasticity)
       - the residuals are normally distributed
+      
+      
+```{r}
+limp <- read.csv("limpet.csv", header = TRUE)
+head(limp, 5) #density was converted to categorical variable for ANOVA
+boxplot(limp$eggs ~ limp$density, xlab = "Density", ylab = "Number of egg masses") #numeric variable first then categorical
+means <- tapply(limp$eggs, limp$density, mean)
+points(means, col = "red", pch = 18)
+
+#anova
+mod <- aov(limp$eggs ~ limp$density)
+summary(mod)
+
+#calculate p-value
+1 - pf(5.566, 3, 20)
+
+```
+
+# Post-hoc Analysis
+
+  - conduct a pairwise analysis of the means
+  - allows us to tell which means are different after rejecting null ANOVA
+  - increases type 1 error
+    - you can inflate your alpha by doing multiple comparisons with two-sample t-tests
+    - using special post-hoc tests can help avoid alpha errors
+  - tests
+    - Tukey's HSD
+    - Bonferroni
+    - Scheffe
+    
+```{}
+
+```
