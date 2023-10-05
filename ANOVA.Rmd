@@ -85,6 +85,24 @@ summary(mod)
     - Bonferroni
     - Scheffe
     
-```{}
+```{r}
 
+#tukey HSD
+TukeyHSD(mod)
+
+```
+
+
+# Check ANOVA assumptions
+  - normal probability plot -- test normality
+  - plot residuals -- test homogeneity of variance
+  - plot residuals in time sequence -- test assumption of independence 
+  
+```{r}
+par(mfrow = c(1,2)) #puts the plots next to each other
+qqnorm(mod$residuals) #normal q-q plot, tests normality
+qqline(mod$residuals, col = "red") #line of fit on q-q plot
+plot(mod$fitted.values, mod$residuals, main = "Residuals vs Fitted", xlab = "Fitted Values", 
+     ylab = "Residuals") #residuals vs. fitted, test variance
+abline(h=0, col = "red") 
 ```
