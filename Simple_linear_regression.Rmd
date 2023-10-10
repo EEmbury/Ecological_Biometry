@@ -33,3 +33,26 @@ knitr::opts_chunk$set(
 ```
 
 
+# **Simple Linear Regression**
+
+  - different from ANOVA because ANOVA requires categorical variables
+  - regression analysis compares two or more numeric variables
+  - can be used to asses the strength of the relationship and make predictions
+  - scatterplot is best to assess data
+  - pearson correlation coefficient
+    - indicates the **linear** relationship between groups
+    - indicates strong and weak relationships
+    - will not show anything about a quadratic relationship
+    - correlation does not imply causation
+    - value = 0.7 or -0.7 -- strong
+    - value = 0.5-0.7 or -0.7-(-0.5) -- medium
+    
+# **Pearson Correlation Coefficient**
+```{r}
+mayfly <- read.csv("mayfly.csv", header = TRUE)
+head(mayfly, 4)
+plot(mayfly$Algae, mayfly$Length, xlab = "Algae cover (%)", ylab = "Length (mm)")
+
+cor(mayfly$Algae, mayfly$Length) #correlation coefficient
+  # 0.7650757 indicates a strong positive linear relationship (over .7 = strong)
+```
