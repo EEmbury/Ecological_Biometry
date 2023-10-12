@@ -56,3 +56,40 @@ plot(mayfly$Algae, mayfly$Length, xlab = "Algae cover (%)", ylab = "Length (mm)"
 cor(mayfly$Algae, mayfly$Length) #correlation coefficient
   # 0.7650757 indicates a strong positive linear relationship (over .7 = strong)
 ```
+
+# **Linear Regression Model **
+  - first variable must be response variable
+  - second variable is predictor variable
+  
+```{r}
+m1 <- lm(mayfly$Length ~ mayfly$Algae)
+summary(m1)
+
+plot(mayfly$Algae, mayfly$Length, xlab = "Algae cover (%)", ylab = "Length (mm)")
+lines(mayfly$Algae, m1$fitted.values, col = "red", lwd = 2)
+
+```
+
+  - to get the predicted values for algae cover %, plug the % into the fitted regression line equation as X
+  - 12.566 + 0.121 * X
+  - 40% algae cover
+    - 12.566 + 0.121 * 40 = 17.406
+    - if you use m1$fitted.values, this number matches the fitted values for 40% algae cover
+    
+    
+# ** Measuring degree of fit**
+  - how well does the regression line fit the data?
+  - high $R^2$ indicates a better fit
+  
+```{r}
+summary.aov(m1)
+```
+# **Check assumptions**    
+  - assume normal distribution and constant variance
+  
+```{r}
+
+par(mfrow = c(1,2))
+plot(m1, which = c(1,2))
+
+```
