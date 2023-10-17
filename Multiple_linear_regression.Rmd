@@ -1,0 +1,55 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: Multiple Linear Regression Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+# **Steps in multiple linear regression**
+
+  - produce scatter plots to check whether there is a linear relationship between response and predictor variables
+  - assess whether there is a multicollinearity problem
+  - list and fit candidate models that relate the response variables to the predictor variables
+  - conduct model selection
+  - conduct residual diagnostics to assess the assumptions of the model and to identify outliers
+  
+  
+# **Example**
+
+```{r}
+mayfly <- read.csv("mayfly.csv", header = TRUE)
+
+plot(mayfly)
+mcor <- cor(mayfly)
+round(mcor, 2)
+```
+
+Multicollinearity
+  - algae and BOD seem like they may be highly correlated
