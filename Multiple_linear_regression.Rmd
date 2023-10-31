@@ -49,7 +49,60 @@ mayfly <- read.csv("mayfly.csv", header = TRUE)
 plot(mayfly)
 mcor <- cor(mayfly)
 round(mcor, 2)
+
 ```
 
 Multicollinearity
   - algae and BOD seem like they may be highly correlated
+  
+  
+#**Selecting the best model**
+  - as # of parameters increase, the amount of variance increases
+```{r}
+
+M1 <- lm(Length ~ Speed, data = mayfly)
+AIC(M1)
+summary(M1)
+
+M2 <- lm(Length ~ Algae, data = mayfly)
+AIC(M2)
+summary(M2)
+
+M3 <- lm(Length ~ NO3, data = mayfly)
+AIC(M3)
+summary(M3)
+
+M4 <- lm(Length ~ Speed + Algae, data = mayfly)
+AIC(M4)
+summary(M4)
+
+
+M5 <- lm(Length ~ Speed + NO3, data = mayfly)
+AIC(M5)
+summary(M5)
+
+
+M6 <- lm(Length ~ Algae + NO3, data = mayfly)
+AIC(M6)
+summary(M6)
+
+#this model has the best R^2 and AIC value
+M7 <- lm(Length ~ Speed + Algae + NO3, data = mayfly)
+AIC(M7)
+summary(M7)
+
+
+#null control model
+#an intercept on the model
+M8 <- lm(Length ~ 1, data = mayfly)
+AIC(M8)
+summary(M8)
+
+mean(mayfly$Length)
+
+
+
+#plot residuals of best model to check assumptions
+par(mfrow = c(1,2))
+plot(M7, which = c(1, 2))
+```
