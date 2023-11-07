@@ -1,0 +1,99 @@
+---
+title: "<span style = 'font-size:14pt;'>**FWCE 457: ANCOVA Class Notes </span>**"
+author: "Emily Embury"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+<style type="text/css">
+/* Whole document: */
+body{
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 12pt;
+}
+</style>
+
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,              
+  warning = FALSE,       
+  message = FALSE,  
+  cache = FALSE,        
+  fig.align = "center", 
+  fig.height = 4,
+  fig.width = 5,
+  class.source="bg-warning",
+  class.output="bg-success"
+)
+
+```
+
+#**ANCOVA**
+
+- a combination of ANOVA and regression analysis
+  - response variable: continuous
+  - predictor variables: categorical and continuous
+  
+```{r}
+seed <- read.csv("seed.csv", head =TRUE)
+
+#grazed
+seedg <- seed[seed$grazing == "Grazed",]
+
+#ungrazed 
+seedug <- seed[seed$grazing == "Ungrazed",]
+
+plot(seedg$root, seedg$fruit, xlim = c(4,11), ylim = c(14,117), xlab = "Root", ylab = "Fruit", pch =19)
+points(seedug$root, seedug$fruit, pch = 21)
+legend("topleft", c("Grazed", "Ungrazed"), pch = c (19, 21), bty = "n")
+
+```
+
+
+# **fit models**
+
+```{r}
+
+#model assuming different intercept and different slope
+m1 <- lm(fruit ~ root * grazing, data = seed)
+AIC(m1)
+summary(m1)
+
+#model assuming same slope by different intercept
+m2 <- lm(fruit ~ root + grazing, data = seed)
+AIC(m2)
+summary(m2)
+
+#model with same slope and intercept
+m3 <- lm(fruit ~ root, data = seed)
+AIC(m3)
+
+#no slope, but different intercepts (same as two-sample t-test)
+m4 <- lm(fruit ~ grazing, data = seed)
+AIC(m4)
+summary(m4) #in out put you can see "grazingUngrazed", meaning that R set Grazed as the reference category
+
+t.test(fruit ~ grazing, data = seed)
+```
+
+# **Model 2 is the most supported**
+
+```{r}
+plot(seedg$root, seedg$fruit, xlim = c(4,11), ylim = c(0, 120), xlab = "Root", ylab = "Fruit", pch = 19)
+abline (-127.829, 23.56, col = "blue")
+points(seedug$root, seedug$fruit, pch = 21)
+abline(-91.726, 23.56, col = "red")
+legend("topleft", c("Grazed", "Ungrazed"), pch = c(19, 21))
+
+
+#check residuals
+par(mfrow = c(1,2))
+plot(m2, which = c(1,2))
+
+```
+
+
